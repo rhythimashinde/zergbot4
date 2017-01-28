@@ -1,11 +1,25 @@
+use "../Generic/Generic" as knowledge.
 use ZergDrone as knowledge.
 use ZergDrone as actionspec.
 
 module ZergDrone {
+	% If goal to have Hatchery and have enough minerals, build a Hatchery
+	if bel(targetHatchery(N)), a-goal(unitAmount("Zerg Hatchery", N)), bel(constructionSite(X,Y))
+		then build("Zerg Hatchery", X, Y).
+		
 	% If goal to have 1 Spawning Pool and have enough minerals, build a Spawning Pool
-	if a-goal(unitAmount("Zerg Spawning Pool", 1)), bel(constructionSite(X,Y), minerals(M), M >= 200) then build("Zerg Spawning Pool", X, Y).
+	if a-goal(unitAmount("Zerg Spawning Pool", 1)), bel(constructionSite(X,Y))
+		then build("Zerg Spawning Pool", X, Y).
 	
+	% If goal to have extractor and there is a gasfield, build an Extractor
+	if a-goal(unitAmount("Zerg Extractor", 1)), bel(vespeneGeyser(_,_,X,Y))
+		then build("Zerg Extractor", X, Y).
+	
+	% If goal to gather 100 gas and there is a vespenegeyser close to the base, gather from mineralfield
+	if a-goal(gas(100)), bel(vespeneGeyser(GasId,_,X,Y), self(Id,_), hatcheryPosition(CX, CY), distance(X,Y,CX,CY,L), L<8) 
+		then gather(GasId).
+		
 	% If goal to have workerActivity gatheringMinerals and there is a mineralfield close to the base, gather from mineralfield
-	if a-goal(workerActivity(Id, gatheringMinerals)), bel(mineralField(MinId,_,X,Y), self(Id,_),
-	hatcheryPosition(CX, CY), distance(X,Y,CX,CY,L), L<8) then gather(MinId).
+	if a-goal(workerActivity(Id, gatheringMinerals)), bel(mineralField(MinId,_,X,Y), self(Id,_), hatcheryPosition(CX, CY), distance(X,Y,CX,CY,L), L<8) 
+		then gather(MinId).
 }

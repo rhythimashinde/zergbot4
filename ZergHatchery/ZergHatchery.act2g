@@ -1,8 +1,7 @@
+use "../Generic/Generic" as knowledge.
 use ZergHatchery as knowledge.
 
 % The train action
 define train(Id) with
-	pre {true}
+	pre { cost(Id, MC, GC), minerals(M), M >= MC, gas(G), G >= GC }
 	post {true}
-
-		

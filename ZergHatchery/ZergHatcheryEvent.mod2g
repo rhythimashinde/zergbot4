@@ -1,29 +1,35 @@
+use "../Generic/Generic" as knowledge.
+use "../Generic/GenericPercepts" as module.
 use ZergHatchery as knowledge.
-use "../GenericMods/GenericPercepts" as module.
 
 module ZergHatcheryEvent {
 	%%%%%%%%%%%%%%% --------------------------------------- Messaging --------------------------------------- %%%%%%%%%%%%%%%
 	
-	% If a friendly drone dies, let the OverMind know
-	forall bel(friendly("Zerg Drone",Id,_,_)) , not(percept(unit(true, "Zerg Drone",Id,_,_,_))) do (overMind).send:(death(Id)).
+	% If a friendly drone dies, let the Manager know
+	forall bel(friendly("Zerg Drone",Id,_,_)), not(percept(unit(true, "Zerg Drone",Id,_,_,_)))
+		do (manager).send:(death(Id)).
 	
 	%%%%%%%%%%%%%%% --------------------------------------- Percepts ---------------------------------------- %%%%%%%%%%%%%%%
 	
 	% The generic percepts most units use
-	if true then GenericPercepts.
+	if true
+		then GenericPercepts.
 	
 	% The handling of the supply percept
-	if percept(resources(_, _, C, T)), bel(supply(OC, OT), (not(OC == C) ; not(OT == T))) then delete(supply(OC, OT)) + insert(supply(C, T)).
+	if percept(resources(_, _, CS, TS)), bel(supply(OCS, OTS), (not(OCS == CS) ; not(OTS == TS)))
+		then delete(supply(OCS, OTS)) + insert(supply(CS, TS)).
 	
 	% The handling of the queueSize percept
-	if percept(queueSize(N)), bel(queueSize(No), No \= N) then delete(queueSize(No)) + insert(queueSize(N)).
+	if percept(queueSize(N)), bel(queueSize(No), No \= N)
+		then delete(queueSize(No)) + insert(queueSize(N)).
 		
 	%%%%%%%%%%%%%%% --------------------------------------- GOALS ------------------------------------------- %%%%%%%%%%%%%%%
 	
-	% If getting low on supply and no overlord is on it's way, adopt goal to make one
-	if bel(not(isMorphing("Zerg Overlord", _)), queueSize(N), N < 2, supply(CS, TS), (TS - CS) < 6,
-	unitAmount("Zerg Overlord",Amount), NewAmount is Amount + 1) then adopt(unitAmount("Zerg Overlord", NewAmount)).
+	% if already have spawning pool and getting low on supply, adopt goal to make one
+	if bel(unitAmount("Zerg Spawning Pool", 1)), bel(not(isMorphing("Zerg Overlord", _)), queueSize(N), N < 2, supply(CS, TS), (TS - CS) < 6, unitAmount("Zerg Overlord",Amount), NewAmount is Amount + 1)
+		then adopt(unitAmount("Zerg Overlord", NewAmount)).
 	
-	% If there is a Spawning Pool start making zerglings
-	if not(goal(unitAmount("Zerg Zergling", 50))), bel(friendly("Zerg Spawning Pool", _, _, _)) then adopt(unitAmount("Zerg Zergling", 50)).	
+	% If there is a Spawning Pool, start making zerglings
+	if bel(targetZergling(NZ), friendly("Zerg Spawning Pool", _, _, _)), not(goal(unitAmount("Zerg Zergling", NZ)))
+		then adopt(unitAmount("Zerg Zergling", NZ)).
 }

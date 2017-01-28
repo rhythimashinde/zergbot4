@@ -1,23 +1,22 @@
 :- dynamic
-position/2,
+
+% attack
 attack/2,
-unitAmount/2,
-base/4,
-enemy/4,
-self/2,
-friendly/6,
-chokepoint/2,
-attack/1,
+attack/0,
+ready/1,
 attacking/0,
-chokePoint/2,
+
+% status
+enemy/4,
+hitPoints/1,
+condition/1,
+
+% map
+position/2,
+chokepoint/2,
+base/4,
 groupLocation/2,
 enemyBase/2,
-ready/1,
-attack/0,
-hitPoints/1,
-attacking/2,
-moving/0,
-condition/1,
 hatcheryPosition/2.
 
 % default distance check

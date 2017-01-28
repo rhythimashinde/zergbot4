@@ -1,21 +1,42 @@
+use "../Generic/Generic" as knowledge.
 use ZergDrone as knowledge.
 
 module ZergDroneInit {	
+	%%%%%%%%%%%%%%% --------------------------------------- Building --------------------------------------- %%%%%%%%%%%%%%%
+	
 	% Init resource percepts
-	if percept(resources(M, G, _, _)) then insert(minerals(M), gas(G)).
+	if percept(resources(M, G, CS, TS))
+		then insert(minerals(M), gas(G), supply(CS, TS)).
 		
 	% Perceive base locations
-	forall percept(base(X,Y,Start,RegID)) do insert(base(X,Y,Start,RegID)).
+	forall percept(base(X,Y,Start,RegID))
+		do insert(base(X,Y,Start,RegID)).
 		
 	% Init ConstructionSites
-	forall percept(constructionSite(X,Y)) do insert(constructionSite(X,Y)).
+	forall percept(constructionSite(X,Y))
+		do insert(constructionSite(X,Y)).
 		
 	% Perceive chokepoints of the map 
-	forall percept(chokepoint(X,Y)) do insert(chokepoint(X,Y)).
+	forall percept(chokepoint(X,Y))
+		do insert(chokepoint(X,Y)).
 		
+	%%%%%%%%%%%%%%% --------------------------------------- Self --------------------------------------- %%%%%%%%%%%%%%%
+	
 	% Init conditions
-	if percept(status(_,_,_,List,_,_)) then insert(condition(List)).
+	if percept(status(_,_,_,List,_,_))
+		then insert(condition(List)).
 	
 	% Send drone info to the manager
-	if percept(self(Id,Type,_,_,_)) then insert(self(Id, Type)) + (manager).send:(drone(Id)).
+	if percept(self(Id,Type,_,_,_))
+		then insert(self(Id, Type)) + (manager).send:(drone(Id)).
+		
+	%%%%%%%%%%%%%%% --------------------------------------- Target --------------------------------------- %%%%%%%%%%%%%%%
+	
+	if true
+		then insert(targetHatchery(5)).
+	
+	%%%%%%%%%%%%%%% --------------------------------------- Static GOALS --------------------------------------- %%%%%%%%%%%%%%%
+	
+	if bel(targetHatchery(N))
+		then adopt(unitAmount("Zerg Hatchery", N)).
 }

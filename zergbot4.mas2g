@@ -1,3 +1,5 @@
+% Environment
+
 use "StarCraft connector.jar" as environment with
 	map="(2)Destination.scx",
 	starcraft_location="C:\\Starcraft",
@@ -7,6 +9,8 @@ use "StarCraft connector.jar" as environment with
 	enemy_race="protoss".
 
 
+% Agents
+
 define zergDrone as agent {
 	use ZergDrone.ZergDrone as main module.
 	use ZergDrone.ZergDroneInit as init module.
@@ -14,14 +18,14 @@ define zergDrone as agent {
 }
 
 define zergHatchery as agent {
-	use ZergHatchery.ZergHatcheryInit as init module.
 	use ZergHatchery.ZergHatchery as main module.
+	use ZergHatchery.ZergHatcheryInit as init module.
 	use ZergHatchery.ZergHatcheryEvent as event module.
 }
 
 define zergZergling as agent{
-	use ZergZergling.ZergZerglingInit as init module.
 	use ZergZergling.ZergZergling as main module.
+	use ZergZergling.ZergZerglingInit as init module.
 	use ZergZergling.ZergZerglingEvent as event module.
 }
 
@@ -29,6 +33,8 @@ define manager as agent {
 	use Manager.Manager as main module.	
 }
 
+
+% Launch
 
 launchpolicy{
 	when type = manager launch manager.

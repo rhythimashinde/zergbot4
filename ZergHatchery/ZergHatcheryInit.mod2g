@@ -1,15 +1,35 @@
+use "../Generic/Generic" as knowledge.
 use ZergHatchery as knowledge.
 
 module ZergHatcheryInit {
+	%%%%%%%%%%%%%%% --------------------------------------- Self --------------------------------------- %%%%%%%%%%%%%%%
+	
 	% Insert info about me
-	if percept(self(Id,Type,_,_,_)) then insert(self(Id, Type)).
+	if percept(self(Id,Type,_,_,_))
+		then insert(self(Id, Type)).
 	
 	% Init queueSize percept
-	if percept(queueSize(Amount)) then insert(queueSize(Amount)).
+	if percept(queueSize(Amount))
+		then insert(queueSize(Amount)).
 	
 	% Init resources percepts
-	if percept(resources(M, G, C, T)) then insert(minerals(M), gas(G), supply(C, T)).
+	if percept(resources(M, G, CS, TS))
+		then insert(minerals(M), gas(G), supply(CS, TS)).
 	
 	% send location to the manager
-	if percept(status(_,_,_,_,X, Y)) then (manager).send(hatcheryPosition(X, Y)).
+	if percept(status(_,_,_,_,X, Y))
+		then (manager).send(hatcheryPosition(X, Y)).
+
+	%%%%%%%%%%%%%%% --------------------------------------- Target --------------------------------------- %%%%%%%%%%%%%%%
+	
+	% Insert target Units
+	if true
+		then insert(targetZergling(100)).
+	if true
+		then insert(targetDrone(12)).
+				
+	%%%%%%%%%%%%%%% --------------------------------------- Static GOALS --------------------------------------- %%%%%%%%%%%%%%%
+	
+	if bel(targetDrone(N))
+		then adopt(unitAmount("Zerg Drone", N)).
 }
