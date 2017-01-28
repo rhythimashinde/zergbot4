@@ -29,14 +29,9 @@ module ZergDroneInit {
 	% Send drone info to the manager
 	if percept(self(Id,Type,_,_,_))
 		then insert(self(Id, Type)) + (manager).send:(drone(Id)).
-		
+
 	%%%%%%%%%%%%%%% --------------------------------------- Target --------------------------------------- %%%%%%%%%%%%%%%
 	
 	if true
-		then insert(targetHatchery(5)).
-	
-	%%%%%%%%%%%%%%% --------------------------------------- Static GOALS --------------------------------------- %%%%%%%%%%%%%%%
-	
-	if bel(targetHatchery(N))
-		then adopt(unitAmount("Zerg Hatchery", N)).
+		then insert(target("Zerg Hatchery",5)).
 }

@@ -30,7 +30,7 @@ define zergZergling as agent{
 }
 
 define manager as agent {
-	use Manager.Manager as main module.	
+	use Manager.Manager as main module.
 }
 
 

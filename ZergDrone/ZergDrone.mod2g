@@ -4,7 +4,7 @@ use ZergDrone as actionspec.
 
 module ZergDrone {
 	% If goal to have Hatchery and have enough minerals, build a Hatchery
-	if bel(targetHatchery(N)), a-goal(unitAmount("Zerg Hatchery", N)), bel(constructionSite(X,Y))
+	if bel(target("Zerg Hatchery",N)), a-goal(unitAmount("Zerg Hatchery", N)), bel(constructionSite(X,Y))
 		then build("Zerg Hatchery", X, Y).
 		
 	% If goal to have 1 Spawning Pool and have enough minerals, build a Spawning Pool

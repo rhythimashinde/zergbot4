@@ -9,10 +9,10 @@ module ZergHatchery {
 		then train("Zerg Overlord").
 		
 	% If goal to make drone and have enough minerals, start training drone
-	if bel(targetDrone(N)), a-goal(unitAmount("Zerg Drone", N)), bel(supply(CS, TS), CS < 20)
+	if bel(target("Zerg Drone",N)), a-goal(unitAmount("Zerg Drone", N)), bel(supply(CS, TS), CS < 20)
 		then train("Zerg Drone").
 		
 	% If goal to make zergling and have enough minerals, start training zerglings
-	if bel(targetZergling(N)), a-goal(unitAmount("Zerg Zergling", N))
+	if bel(target("Zerg Zergling",N)), a-goal(unitAmount("Zerg Zergling", N))
 		then train("Zerg Zergling").
 }

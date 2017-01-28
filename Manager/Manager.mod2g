@@ -1,7 +1,9 @@
+use "../Generic/Generic" as knowledge.
 use Manager as knowledge.
 order=linearall.
 
 module ManagerEvent {
+			
 	%%%%%%%%%%%%%%% --------------------------------------- Units --------------------------------------- %%%%%%%%%%%%%%%
 	
 	% If drone info received, insert it in knowledge base
@@ -15,10 +17,6 @@ module ManagerEvent {
 	% If a drone has died, delete him from knowledge base
 	forall (_).sent:(death(Id)), bel(drone(Name, Id)) 
 		do delete(drone(Name, Id)).
-		
-	% If zergling is ready, insert it in knowledge base
-	forall (_).sent:(ready(Id)) 
-		do insert(ready(Id)).
 	
 	%%%%%%%%%%%%%%% --------------------------------------- Building --------------------------------------- %%%%%%%%%%%%%%%
 	
@@ -37,6 +35,10 @@ module ManagerEvent {
 		do (Name).send:(hatcheryPosition(X, Y)).
 	
 	%%%%%%%%%%%%%%% --------------------------------------- Attacking --------------------------------------- %%%%%%%%%%%%%%%
+		
+	% If zergling is ready, insert it in knowledge base
+	forall (_).sent:(ready(Id)) 
+		do insert(ready(Id)).
 		
 	% If enough zerglings gathered, tell zerglings to attack
 	forall bel(allReady) do allother.send(attack).

@@ -24,12 +24,12 @@ module ZergHatcheryInit {
 	
 	% Insert target Units
 	if true
-		then insert(targetZergling(100)).
+		then insert(target("Zerg Zergling",100)).
 	if true
-		then insert(targetDrone(12)).
+		then insert(target("Zerg Drone",12)).
 				
 	%%%%%%%%%%%%%%% --------------------------------------- Static GOALS --------------------------------------- %%%%%%%%%%%%%%%
 	
-	if bel(targetDrone(N))
+	if bel(target("Zerg Drone",N))
 		then adopt(unitAmount("Zerg Drone", N)).
 }

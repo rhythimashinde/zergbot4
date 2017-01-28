@@ -26,10 +26,10 @@ module ZergHatcheryEvent {
 	%%%%%%%%%%%%%%% --------------------------------------- GOALS ------------------------------------------- %%%%%%%%%%%%%%%
 	
 	% if already have spawning pool and getting low on supply, adopt goal to make one
-	if bel(unitAmount("Zerg Spawning Pool", 1)), bel(not(isMorphing("Zerg Overlord", _)), queueSize(N), N < 2, supply(CS, TS), (TS - CS) < 6, unitAmount("Zerg Overlord",Amount), NewAmount is Amount + 1)
-		then adopt(unitAmount("Zerg Overlord", NewAmount)).
+	if bel(unitAmount("Zerg Spawning Pool", 1)), bel(not(isMorphing("Zerg Overlord", _)), queueSize(N), N < 2, supply(CS, TS), (TS - CS) < 6), bel(unitAmount("Zerg Overlord", X), NewX is X + 1)
+		then adopt(unitAmount("Zerg Overlord", NewX)).
 	
 	% If there is a Spawning Pool, start making zerglings
-	if bel(targetZergling(NZ), friendly("Zerg Spawning Pool", _, _, _)), not(goal(unitAmount("Zerg Zergling", NZ)))
+	if bel(target("Zerg Zergling",NZ), friendly("Zerg Spawning Pool", _, _, _)), not(goal(unitAmount("Zerg Zergling", NZ)))
 		then adopt(unitAmount("Zerg Zergling", NZ)).
 }

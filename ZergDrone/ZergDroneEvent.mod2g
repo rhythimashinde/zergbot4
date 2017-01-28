@@ -59,6 +59,10 @@ module ZergDroneEvent {
 		
 	%%%%%%%%%%%%%%% --------------------------------------- GOALS --------------------------------------- %%%%%%%%%%%%%%%
 	
+	% If there is enough resource, build Hatchery
+	if bel(minerals(M), M >= 400), bel(builder, target("Zerg Hatchery",N)), not(goal(unitAmount("Zerg Hatchery", N)))
+		then adopt(unitAmount("Zerg Hatchery", N)).
+		
 	% If there is no spawningpool yet, create one
 	if not(goal(unitAmount("Zerg Spawning Pool", 1))), bel(builder, not(friendly("Zerg Spawning Pool", _, _, _,_,_))) 
 		then adopt(unitAmount("Zerg Spawning Pool", 1)).
@@ -68,7 +72,7 @@ module ZergDroneEvent {
 		then adopt(unitAmount("Zerg Extractor", 1)).
 	
 	% If there is an extractor, gather 100 gas
-	if bel(unitAmount("Zerg Extractor", 1)) 
+	if bel(unitAmount("Zerg Extractor", N), N > 0) 
 		then adopt(gas(100)).
 		
 	% If the worker is not busy yet, start gathering minerals
