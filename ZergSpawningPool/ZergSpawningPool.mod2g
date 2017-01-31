@@ -1,0 +1,8 @@
+use "../Generic/Generic" as knowledge.
+use ZergSpawningPool as knowledge.
+use ZergSpawningPool as actionspec.
+
+module ZergSpawningPool {
+	if a-goal(upgrading(Type))
+		then upgrade(Type).
+}

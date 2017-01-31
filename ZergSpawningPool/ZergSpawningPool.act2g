@@ -1,0 +1,7 @@
+use "../Generic/Generic" as knowledge.
+use ZergSpawningPool as knowledge.
+
+% Upgrade action
+define upgrade(Id) with
+	pre { cost(Id, MC, GC), minerals(M), M >= MC, gas(G), G >= GC }
+	post { true }

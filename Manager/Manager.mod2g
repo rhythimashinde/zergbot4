@@ -21,12 +21,20 @@ module ManagerEvent {
 	%%%%%%%%%%%%%%% --------------------------------------- Building --------------------------------------- %%%%%%%%%%%%%%%
 	
 	% If believe done, but the corresponding drone does not exist anymore, delete done from knowledge base
-	if bel(done(Name, Id), not(drone(Name, Id)))
-		then delete(done(Name, Id)).
+	if bel(isBuilder(Name, Id), not(drone(Name, Id)))
+		then delete(isBuilder(Name, Id)).
 	
 	% If not believing done yet and have info about drone, insert in knowledge base and tell the drone he is the builder 
-	if bel(not(done(Name, Id)), drone(Name, Id))
-		then insert(done(Name, Id)) + (Name).send(builder).
+	if bel(not(isBuilder(Name, Id)), drone(Name, Id))
+		then insert(isBuilder(Name, Id)) + (Name).send(builder).
+	
+	% If believe done, but the corresponding drone does not exist anymore, delete done from knowledge base
+	if bel(isGasCollector(Name, Id), not(drone(Name, Id)))
+		then delete(isGasCollector(Name, Id)).
+	
+	% If not believing done yet and have info about drone, insert in knowledge base and tell the drone he is the builder 
+	if bel(not(isGasCollector(Name, Id)), drone(Name, Id))
+		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
 	
 	%%%%%%%%%%%%%%% --------------------------------------- Messaging --------------------------------------- %%%%%%%%%%%%%%%
 	

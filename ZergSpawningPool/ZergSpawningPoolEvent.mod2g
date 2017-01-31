@@ -1,0 +1,18 @@
+use "../Generic/Generic" as knowledge.
+use "../Generic/GenericPercepts" as module.
+use ZergSpawningPool as knowledge.
+
+module ZergSpawningPoolEvent {
+	
+	%%%%%%%%%%%%%%% --------------------------------------- Percepts ---------------------------------------- %%%%%%%%%%%%%%%
+	
+	% The generic percepts most units use
+	if true
+		then GenericPercepts.
+	
+	% The handling of mineral and gas resources
+	if percept(resources(M, _, _, _)), bel(minerals(OM), not(OM == M)) 
+		then delete(minerals(OM)) + insert(minerals(M)).
+	if percept(resources(_, G, _, _)), bel(gas(OG), not(G == OG)) 
+		then delete(gas(OG)) + insert(gas(G)).
+}

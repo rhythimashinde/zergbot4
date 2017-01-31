@@ -14,9 +14,9 @@ module ZergDrone {
 	% If goal to have extractor and there is a gasfield, build an Extractor
 	if a-goal(unitAmount("Zerg Extractor", 1)), bel(vespeneGeyser(_,_,X,Y))
 		then build("Zerg Extractor", X, Y).
-	
-	% If goal to gather 100 gas and there is a vespenegeyser close to the base, gather from mineralfield
-	if a-goal(gas(100)), bel(vespeneGeyser(GasId,_,X,Y), self(Id,_), hatcheryPosition(CX, CY), distance(X,Y,CX,CY,L), L<8) 
+		
+	% If goal to have workerActivity gatheringMinerals and there is a mineralfield close to the base, gather from mineralfield
+	if a-goal(workerActivity(Id, gatheringGas)), bel(vespeneGeyser(GasId,_,X,Y))
 		then gather(GasId).
 		
 	% If goal to have workerActivity gatheringMinerals and there is a mineralfield close to the base, gather from mineralfield

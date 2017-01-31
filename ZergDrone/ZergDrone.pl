@@ -4,6 +4,7 @@
 condition/1,
 workerActivity/2,
 builder/0,
+gasCollector/0,
 
 % location
 mineralField/4,

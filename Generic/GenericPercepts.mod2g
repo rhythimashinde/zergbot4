@@ -30,4 +30,9 @@ module GenericPercepts {
 		do insert(unitAmount(Type,Count)).
 	forall bel(unitAmount(Type,Count)),not(percept(unitAmount(Type,Count)))
 		do delete(unitAmount(Type,Count)).
+	
+	% The handling of the upgrading percept
+	forall percept(upgrading(Type)), not(bel(upgrading(Type)))
+		do insert(upgrading(Type)).
+		
 }

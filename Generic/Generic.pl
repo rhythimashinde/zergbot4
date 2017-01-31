@@ -8,6 +8,7 @@ friendly/6,
 self/2,
 unitAmount/2,
 isMorphing/2,
+upgrading/1,
 
 % resource
 minerals/1,
@@ -16,6 +17,8 @@ supply/2,
 
 % goal
 target/2.
+
+
 
 %%%%%%%%%%%%%%% --------------------------------------- Costs --------------------------------------- %%%%%%%%%%%%%%%
 

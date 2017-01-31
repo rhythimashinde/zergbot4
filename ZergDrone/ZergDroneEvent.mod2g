@@ -6,8 +6,12 @@ module ZergDroneEvent {
 	%%%%%%%%%%%%%%% --------------------------------------- Messaging --------------------------------------- %%%%%%%%%%%%%%%
 	
 	% Received builder task from the Manager
-	if (Name).sent:(builder)
-		then insert(builder).
+	if (_).sent:(builder)
+		then print("Hi there, I'm a builder!") + insert(builder).
+		
+	% Received gasCollector task from the Manager
+	if (_).sent:(gasCollector)
+		then print("Hi there, I'm a gas collector!") + insert(gasCollector).
 	
 	% If don't know hatchery position yet, ask the manager
 	if not(bel(hatcheryPosition(_, _)))
@@ -42,8 +46,8 @@ module ZergDroneEvent {
 	% The handling of vespenegeysers
 	forall percept(vespeneGeyser(Id,Amount,_,X,Y)), not(bel(vespeneGeyser(Id,Amount,X,Y))) 
 		do insert(vespeneGeyser(Id,Amount,X,Y)).
-	forall bel(vespeneGeyser(Id,Amount,X,Y)), not(percept(vespeneGeyser(Id,Amount,_,X,Y))) 
-		do delete(vespeneGeyser(Id,Amount,X,Y)).
+	% forall bel(vespeneGeyser(Id,Amount,X,Y)), not(percept(vespeneGeyser(Id,Amount,_,X,Y))) 
+	%	do delete(vespeneGeyser(Id,Amount,X,Y)).
 	
 	% The handling of the constructionSites
 	forall percept(constructionSite(X,Y)), not(bel(constructionSite(X,Y))) 
@@ -70,12 +74,12 @@ module ZergDroneEvent {
 	% If there is a vespenegeyser and already have spawning pool, create an extractor
 	if not(goal(unitAmount("Zerg Extractor", 1))), bel(unitAmount("Zerg Spawning Pool", 1)), bel(builder, vespeneGeyser(_,_,_,_)) 
 		then adopt(unitAmount("Zerg Extractor", 1)).
-	
+				
 	% If there is an extractor, gather 100 gas
-	if bel(unitAmount("Zerg Extractor", N), N > 0) 
-		then adopt(gas(100)).
+	if bel(unitAmount("Zerg Extractor", _), cost("Metabolic Boost", _, TG), gas(G), G < TG, gasCollector, self(Id, _))
+		then adopt(workerActivity(Id, gatheringGas)).
 		
 	% If the worker is not busy yet, start gathering minerals
-	if bel(not(busy), self(Id, _)) 
+	if bel(not(busy), self(Id, _)), not(bel(gasCollector, gas(G), G < 100))
 		then adopt(workerActivity(Id, gatheringMinerals)).
 }
