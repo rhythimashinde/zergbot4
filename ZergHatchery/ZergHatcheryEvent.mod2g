@@ -23,11 +23,19 @@ module ZergHatcheryEvent {
 	if percept(queueSize(N)), bel(queueSize(No), No \= N)
 		then delete(queueSize(No)) + insert(queueSize(N)).
 	
-	% if already have spawning pool and getting low on supply, adopt goal to make one
-	if bel(unitAmount("Zerg Spawning Pool", 1)), bel(not(isMorphing("Zerg Overlord", _)), queueSize(N), N < 2, supply(CS, TS), (TS - CS) < 6), bel(unitAmount("Zerg Overlord", X), NewX is X + 1)
+	% if getting low on supply, adopt goal to make one
+	if bel(not(isMorphing("Zerg Overlord", _)), queueSize(N), N < 2, supply(CS, TS), (TS - CS) < 6), bel(unitAmount("Zerg Overlord", X), NewX is X + 1)
 		then adopt(unitAmount("Zerg Overlord", NewX)).
 	
 	% If there is a Spawning Pool, start making zerglings
-	if bel(target("Zerg Zergling",NZ), friendly("Zerg Spawning Pool", _, _, _)), not(goal(unitAmount("Zerg Zergling", NZ)))
-		then adopt(unitAmount("Zerg Zergling", NZ)).
+	if bel(target("Zerg Zergling",N), friendly("Zerg Spawning Pool", _, _, _)), not(goal(unitAmount("Zerg Zergling", N)))
+		then adopt(unitAmount("Zerg Zergling", N)).
+		
+	% If already enough zerglings attacking, start making drones again
+	if bel(unitAmount("Zerg Zergling", N), N > 10)
+		then insert(target("Zerg Drone", 6)) + adopt(unitAmount("Zerg Drone", 6)).
+	if bel(unitAmount("Zerg Zergling", N), N > 15)
+		then insert(target("Zerg Drone", 8)) + adopt(unitAmount("Zerg Drone", 8)).
+	if bel(unitAmount("Zerg Zergling", N), N > 20)
+		then insert(target("Zerg Drone", 10)) + adopt(unitAmount("Zerg Drone", 10)).
 }

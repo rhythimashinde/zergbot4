@@ -1,0 +1,3 @@
+:- dynamic
+
+target/2.

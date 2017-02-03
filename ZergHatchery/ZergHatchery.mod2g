@@ -4,11 +4,11 @@ use Zerghatchery as actionspec.
 
 module ZergHatchery {	
 	% If goal to make an overlord and have enough minerals, start training an overlord
-	if a-goal(unitAmount("Zerg Overlord", Amount)), bel(not(isMorphing("Zerg Overlord", _)), supply(CS, TS), (TS - CS) < 6)
+	if a-goal(unitAmount("Zerg Overlord", Amount)), bel(not(isMorphing("Zerg Overlord", _)), supply(CS, TS), (TS - CS) < 4)
 		then train("Zerg Overlord").
 		
 	% If goal to make drone and have enough minerals, start training drone
-	if bel(target("Zerg Drone",N)), a-goal(unitAmount("Zerg Drone", N)), bel(supply(CS, TS), CS < 20)
+	if bel(target("Zerg Drone",N)), a-goal(unitAmount("Zerg Drone", N)), bel(supply(CS, _), CS < 20)
 		then train("Zerg Drone").
 		
 	% If goal to make zergling and have enough minerals, start training zerglings

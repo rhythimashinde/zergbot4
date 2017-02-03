@@ -71,8 +71,8 @@ module ZergDroneEvent {
 	if not(goal(unitAmount("Zerg Spawning Pool", 1))), bel(builder, not(friendly("Zerg Spawning Pool", _, _, _,_,_))) 
 		then adopt(unitAmount("Zerg Spawning Pool", 1)).
 		
-	% If there is a vespenegeyser and already have spawning pool, create an extractor
-	if not(goal(unitAmount("Zerg Extractor", 1))), bel(unitAmount("Zerg Spawning Pool", 1)), bel(builder, vespeneGeyser(_,_,_,_)) 
+	% If there is a vespenegeyser and already have more than 5 drones, create an extractor
+	if not(goal(unitAmount("Zerg Extractor", 1))), bel(unitAmount("Zerg Drone",N), N > 5), bel(builder, vespeneGeyser(_,_,_,_)) 
 		then adopt(unitAmount("Zerg Extractor", 1)).
 				
 	% If there is an extractor, gather 100 gas
